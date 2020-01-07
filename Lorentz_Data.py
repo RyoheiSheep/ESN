@@ -68,9 +68,9 @@ class InputGenerator:
             # ys  = (ys- np.min(ys))/(np.max(ys)-np.min(ys))
             # zs  = (zs- np.min(zs))/(np.max(zs)-np.min(zs))
         
-        matrix = np.append(np.append([xs],[ys], axis = 0),[zs], axis = 0)
+        matrix = xs
         
-        return matrix.T
+        return matrix
     
 
 def main():
@@ -82,7 +82,7 @@ def main():
     GeneratingInput = InputGenerator(start_time= 0, end_time= T, num_time_steps= num_time_step)
     lorentz_data = GeneratingInput.generate_lorentz()
     
-    np.savetxt('Lorentz_test.txt', lorentz_data)
+    np.savetxt('Lorentz_X.txt', lorentz_data)
     
 
 
