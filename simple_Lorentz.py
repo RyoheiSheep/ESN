@@ -55,7 +55,7 @@ plt.title('A sample of input data')
 n_inputs = 1
 input_bias = True # add a constant input to 1
 n_outputs = 1
-n_reservoir = 3000 # number of recurrent units
+n_reservoir = 300 # number of recurrent units
 leak_rate = 0.3 # leaking rate (=1/time_constant_of_neurons)
 spectral_radius = 1.25 # Scaling of recurrent matrix
 input_scaling = 1. # Scaling of input matrix
@@ -171,9 +171,13 @@ print("Root Mean Squared error (RMSE):\t\t%.4e\n" % rmse )
 print("Normalized RMSE (based on mean):\t%.4e" % (nmrse_mean) )
 print("Normalized RMSE (based on max - min):\t%.4e" % (nmrse_maxmin) )
 print("********************\n")
-
+# print("internal trained")
+# print(internal_trained)
+# print("*******************************\n")
+# print("number of internal states")
+# print(len(internal_trained.T))
 plt.figure()
-plt.plot( internal_trained[0][:200,:12])
+plt.plot( internal_trained[0][:200,:N])
 plt.ylim([-1.,1.])
 plt.title('Activations $\mathbf{x}(n)$ from Reservoir Neurons ID 0 to 11 for 200 time steps')
 

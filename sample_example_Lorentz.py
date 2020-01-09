@@ -37,6 +37,7 @@ trainLen = initLen + 1900 # number of time steps during which we train the netwo
 testLen = 2000 # number of time steps during which we test/run the network
 
 data = np.loadtxt('Lorentz_test.txt')
+data = data.T
 print( "data dimensions", data.shape)
 
 # plot some of it
@@ -141,27 +142,25 @@ print( "test_in, test_out dimensions", test_in.shape, test_out.shape)
 
 fig1 = plt.figure()
 ax1 = Axes3D(fig1)
-ax1 = plt.plot(train_in, train_out)
+ax1.plot(train_in.T[0].T[0], train_in.T[0].T[1], train_in.T[0].T[2], linewidth =0.1, color = "red", label = "train_in")
+ax1.plot(train_out.T[0].T[0], train_out.T[0].T[1], train_out.T[0].T[2], linewidth =0.1, color = "blue", label ="train_out")
 ax1.set_xlim([-10,10])
 ax1.set_ylim([-10,10])
 ax1.set_zlim([-10,10])
+ax1.legend()
 plt.title('Recurrence plot of training data: input(t+1) vs. input(t)')
-plt.figure()
-plt.plot(train_in)
-plt.plot(train_out)
-plt.xlim([-10,10])
-plt.ylim([-10,10])
-plt.zlim([-10,10])
-plt.legend(['train_in','train_out'])
-plt.title('train_in & train_out')
+
+
 # plt.figure()
 # plt.plot(test_in)
 # plt.plot(test_out)
 # plt.ylim([-1.1,1.1])
 # plt.legend(['test_in','test_out'])
 # plt.title('test_in & test_out')
-
-
+print('dimension of inputs with bias')
+print([train_in,][0].shape[1] +1)
+print('dimension of Win')
+print(Win.shape[1])
 internal_trained = reservoir.train(inputs=[train_in,], teachers=[train_out,], wash_nr_time_step=initLen, verbose=False)
 output_pred, internal_pred = reservoir.run(inputs=[test_in,], reset_state=False)
 errorLen = len(test_out[:]) #testLen #2000
@@ -186,10 +185,10 @@ plt.plot( internal_trained[0][:200,:12])
 plt.ylim([-1.1,1.1])
 plt.title('Activations $\mathbf{x}(n)$ from Reservoir Neurons ID 0 to 11 for 200 time steps')
 
-plt.figure(figsize=(12,4))
-plt.plot(test_out,  color='0.75', lw=1.0)
-plt.plot(output_pred[0], color='0.00', lw=1.5)
-plt.title("Ouput predictions against real timeseries")
-plt.legend(["real timeseries", "output predictions"])
+# plt.figure(figsize=(12,4))
+# plt.plot(test_out,  color='0.75', lw=1.0)
+# plt.plot(output_pred[0], color='0.00', lw=1.5)
+# plt.title("Ouput predictions against real timeseries")
+# plt.legend(["real timeseries", "output predictions"])
 # plt.ylim(-1.1,1.1)
 plt.show()
